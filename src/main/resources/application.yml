@@ -1,0 +1,39 @@
+# 웹 애플리케이션 서버의 포트번호를 지정한다.
+server:
+ port: 80
+
+# 로그출력레벨 설정하기
+# logging.level.root=info                     애플리케이션의 기본 로그출력 레벨을 설정한다.
+# logging.level.org.springframwork.web=trace  org.springframework.web 패키지의 로그 출력레벨을 trace로 설정한다.
+# logging.level.com.example.web=debug         com.example.web패키지의 로그 출력레벨을 debug로 설정한다.
+# logging.level.com.example.mapper=trace      com.example.mapper패키지의 로그 출력레벨을 trace로 설정한다. mybatis가 실행하는 SQL출력시킨다.
+logging:
+  level:
+    root: info
+    '[org.springframework.web]': trace
+    '[com.example.web]': debug
+    '[com.example.mapper]': trace
+ 
+spring:
+# 커넥션풀 연결정보를 설정한다.
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: hta
+    password: zxcv1234
+# spring mvc에서 내부이동할 뷰 템플릿 페이지에 대한 경로 및 확장자를 설정한다.
+# resource 밑에 놔두지 않으려면 설정을 다시 해줘야한다.      
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+    format:
+        date: 'yyyy-MM-dd'
+     
+# mybatis 연동정보를 설정한다.
+mybatis:
+ mapper-locations: mybatis/mappers/*.xml
+ configuration:
+    jdbc-type-for-null: 'NULL'
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl 
+    
