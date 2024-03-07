@@ -18,8 +18,51 @@
 	<div class="row mb-3">
 		<div class="col-12">
 			<h1>회원가입</h1>
-			
+			<%--
+				<form:form />
+					* 스프링에서 제공하는 <form>태그다.
+					* <form:form />은 <form / >태그로 변경된다.
+					* 폼 입력값 유효성 체크와 관련된 태그를 포함한다.
+					*속성
+						modelAttribute
+							+ 입렵폼의 입력필드에 표현한 값을 가지고 있는 Form객체의 modelAttribute 이름이다.
+							+예시
+									@Getmapping("/register")
+									public String form(Model model) {
+											//form.jsp에 "userRegisterForm"이라는 이르므으로 UserRegisterForm객체를 Model에 담아서 전달한다.
+											// "userRegisterForm"이 modelAttribute name 이다.
+											model.addAttribute("userRegisterForm, new UserRegisterFomr());
+											return "form";
+										}
+											
+							<form:checkbox />
+							<form:checkboxes />
+							<form:hidden />
+							<form:input />
+							<form:option />
+							<form:options />
+							<form:password />
+							<form:radiobutton />
+							<form:radiobuttons />
+							<form:select />
+							<form:textarea />
+									- 스프링에서 제공하는 폼 입력필드이다.
+									- 입력필드의 path 속성은 name 속성에 해당한다.
+									- 입력필드의 path 속성명과 Form클래스의 필드명이 일치해야한다.
+									
+								<form:errors />
+									- 유효성 체크 오류 메세지를 출력시킨다.
+									- path 속성은 Form 클래스의 필드명이다.
+									- path 속성에서 지정한 필드에 저장된 값이 유효성 체크를 위반했을 경우 해당 제약조건에 지정한 오류 메세지를 출력시킨다.
+							<form:errors path="*" cssClass="text-danger" /> path로 하면 모든 오류를 표시할수있다. 
+								
+					
+			 --%>
 			<form:form class="border bg-light p-3" method="post" action="register" modelAttribute="userRegisterForm">
+				
+				<%-- <form:errors path="*" cssClass="text-danger" /> 
+					path를 *로하는 경우 모든 에러 메세지를 표현할수 있다.
+				--%> 
 				<div class="form.group mb-3">
 					<label class="form-label">아이디</label>
 					<form:input type="text" class="form-control" path="id" />
