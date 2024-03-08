@@ -91,4 +91,8 @@ public class HomeController {
 		public String loginform() {
 			return "loginform";
 		}
+		@GetMapping("/accessdenied")
+		public String accessDenied() {
+			return "error/denied";
+		}
 }

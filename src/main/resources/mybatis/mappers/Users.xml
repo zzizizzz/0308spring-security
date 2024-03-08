@@ -30,10 +30,20 @@
 	</resultMap>
 	
 	<insert id="insertUser" parameterType="com.example.vo.User">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+		<!-- 
+			selectKey = 항상insert 안에 사용한다.
+			keyProperty 파라미터에 명시된 NO에 값을 넣어준다.  
+		-->
+			select
+				users_seq.nextval
+			from
+				dual
+		</selectKey>
 		insert into shop_users
 		(user_no, user_id, user_password, user_name, user_email, user_tel, user_birth)
 		values
-		(users_seq.nextval, #{id}, #{password}, #{name}, #{email}, #{tel}, #{birth})
+		(#{no}, #{id}, #{password}, #{name}, #{email}, #{tel}, #{birth})
 	</insert>
 	
 	<update id="updateUser" parameterType="com.example.vo.User">

@@ -12,9 +12,11 @@ public class UserDetailsImpl implements UserDetails {
 	private String username;
 	private String password;
 	private String name;
+	// Collection<? extends GrantedAuthority> 그하위까지 가질수 있다.
 	private Collection<? extends GrantedAuthority> authorities;
 	
-	public UserDetailsImpl(String username, String password, Collection<? extends GrantedAuthority> authorities, String name ) {
+	// userDetailsServiceImpl 순서가 맞아야한다.!
+	public UserDetailsImpl(String username, String password, String name, Collection<? extends GrantedAuthority> authorities ) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
