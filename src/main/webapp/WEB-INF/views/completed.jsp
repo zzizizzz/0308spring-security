@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="common/tags.jsp" %>
+<%@ include file="common/tags.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,20 +12,35 @@
 <title>bootstrap</title>
 </head>
 <body>
-<%@ include file="common/navbar.jsp" %>
+<%@include file="common/navbar.jsp" %>
 <div class="container">
 	<div class="row mb-3">
 		<div class="col-12">
-			<h1>홈</h1>
-		</div>
-	</div>
-	<div class="row mb-3">
-		<div class="col-3">
-			<%-- 화면에 자주 등장하는것 --%>
-			<%@include file="common/category.jsp" %>
-		</div>
-		<div class="col-9">
-		
+			<h1>회원가입이 완료되었다</h1>
+			
+			<p>회원가입정보를 확인</p>
+			<table class="table">
+				<colgroup>
+					<col width="15%">
+					<col width="35%">
+					<col width="15%">
+					<col width="35%">
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>사용자 번호</th>
+						<td>${user.no}</td>
+						<th>사용자아이디</th>
+						<td>${user.id}</td>
+					</tr>
+					<tr>
+						<th>사용자 이메일</th>
+						<td>${user.email}</td>
+						<th>사용자 전화번호</th>
+						<td>${user.tel}</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

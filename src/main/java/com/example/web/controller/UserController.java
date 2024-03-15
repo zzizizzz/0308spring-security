@@ -1,15 +1,19 @@
 package com.example.web.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.service.OrderService;
 import com.example.service.UserService;
 import com.example.vo.User;
+import com.example.web.dto.OrderListDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,9 +22,34 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
-	
+	// 주입받으려고
+	private final OrderService orderService;
 	// userservice 주입받는것 -- 기억
 	private final UserService userService;
+	
+	/*
+	 * 요청방식
+	 * 		GET
+	 * 요청 URL
+	 * 		localhost/user/check?id=hong
+	 * 요청 파라미터
+	 * 		id=hong
+	 * 요청 내용
+	 * 		아이디를 전달해서 중복여부를 요청한다.
+	 * 처리 내용
+	 * 		아이디를 전달받아서 해당 아이디의 사용자가 존재하면 'exist', 아니면 'none'응답으로 보낸다
+	 * 텍스트 형식으로 보내기때문에 responseBody가 잇어야함
+	 */
+	//아이디 중복체크
+	@GetMapping("/check")
+	@ResponseBody
+	public String checkId(String id) {
+		User user = userService.getUser(id);
+		if(user == null) {
+			return "none";
+		}
+		return "exist";
+	}
 	
 	/*
 	 * 요청방식 
@@ -50,5 +79,14 @@ public class UserController {
 		model.addAttribute("user", user);
 		
 		return "user/info";
+	}
+	@PreAuthorize("isAuthenticated()") // 로그인해야지 필요함
+	@GetMapping("/orders")
+	public String orders(Principal principal, Model model) {
+		String userId = principal.getName();
+		List<OrderListDto> dtos = orderService.getMyOrders(userId);
+		model.addAttribute("dtos", dtos);
+		
+		return "user/orders";
 	}
 }

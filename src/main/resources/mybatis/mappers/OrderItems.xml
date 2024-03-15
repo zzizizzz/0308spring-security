@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.OrderItemMapper">
+	<insert id="insertOrderItem" parameterType="com.example.vo.OrderItem">
+		insert into shop_order_items
+		(order_no, item_amount, item_price, product_no)
+		values
+		(#{orderNo}, #{amount}, #{price}, #{product.no})
+	</insert>
+	
+	<select id="getOrderItemByOrderNo" parameterType="int" resultType="com.example.vo.OrderItem">
+		select
+			A.order_no			as orderNo,
+			A.item_amount		as amount,
+			A.item_price		as price,
+			A.product_no 		as "product.no",
+			B.product_name		as "product.name",
+			B.product_price		as "product.price"
+<!-- 주문당시의 가격을 저장해야한다. 가격이 다를수 있으므로 -->
+		from 
+			shop_order_items A, shop_products B
+		where
+			 A.order_no = #{value}
+			 and A.product_no = B.product_no
+	
+	</select>
+
+</mapper>

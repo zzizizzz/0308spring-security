@@ -65,9 +65,10 @@
 				--%> 
 				<div class="form.group mb-3">
 					<label class="form-label">아이디</label>
-					<form:input type="text" class="form-control" path="id" />
+					<form:input type="text" class="form-control" path="id" onkeyup="checkUserId()" />
 					<form:errors path="id" cssClass="text-danger"></form:errors>
 					<!-- 아이디 유효성체크를 통과못할때 표시됨 -->
+					<span id="id-check-message"></span>					
 				</div>
 				<div class="form.group mb-3">
 					<label class="form-label">비밀번호</label>
@@ -106,5 +107,38 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+/*
+ * 아이디 입력필드에서 아이디를 입력할 때 마다 실행되는 함수를 정의한다.
+ 		처리내용
+ 			1. 아이디를 입력필드를 선택한다. <-----------let input document.getElementById("id")
+ 			2. 아이디를 입력필드에 입력된 값을 조회한다.    <---- let userId = input.value
+ 			3. AJAX 통신에 필요한 XMLHttpRequest객체를 생성하고, 서버로 요청을 보낸다.
+ 			4. AJAX 요청에 대한 응답을 확인하고, 아이디 중복체크 여부를 화면에 표시한다.
+ */
+function checkUserId() {
+	let span = document.getElementById("id-check-message")
+	let input = document.getElementById("id");
+	let userId = input.value;
+	
+	if(userId.length <3) {
+		return;
+	}
+	
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status==200){
+			let result = xhr.responseText;
+			if(result == 'none') {
+				span.textContent = "사용 가능한 아이디 입니다."
+			}else if(result == 'exist'){
+				span.textContent = "사용 불가능한 아이디 입니다."
+			}
+		}
+	}
+	xhr.open("GET", "/user/check?id="+userId); //초기화 
+	xhr.send(null);
+}
+</script>
 </body>
 </html>

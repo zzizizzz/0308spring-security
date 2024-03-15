@@ -11,7 +11,7 @@
          </li>
          <sec:authorize access="hasRole('ROLE_ADMIN')">
 	         <li class="nav-item">
-	            <a class="nav-link" href="/admin.home">관리자</a>
+	            <a class="nav-link" href="/admin/home">관리자</a>
 	         </li>
          </sec:authorize>
        </ul>
